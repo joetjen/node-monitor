@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Server Monitor</title>
+</head>
+<body>
+  <p>Status:</p>
+  <ul>
+    <li>
+      Sites:
+      <ul>
+        <li>ewfwerewr: <span id="ewfwerewr"></span></li>
+        <li>google: <span id="google"></span></li>
+        <li>heise: <span id="heise"></span></li>
+      </ul>
+    </li>
+    <li>
+      Another Set of Sites:
+      <ul>
+        <li>yahoo: <span id="yahoo"></span></li>
+        <li>microsoft: <span id="microsoft"></span></li>
+      </ul>
+    </li>
+  <p>Messages:</p>
+  <ul id="chat"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/jquery/jquery.js"></script>
+  <script>
+    var socket = io()
+    var $chat  = $('#chat')
+    var texts  = []
+
+    socket.on('chat', function (message) {
+      switch (message.type) {
+        case 'text':
+          addText(message)
+          break;
+
+        case 'status':
+          updateStatus(message.value)
+      }
+
+    })
+
+    function addText(message) {
+      var text = message.time + ': ' + message.value
+
+      texts.push(text)
+
+      texts = texts.reverse().slice(0, 10).reverse()
+
+      $chat.find('li').remove()
+
+      texts.forEach(text => $chat.append($('<li>').text(text)))
+    }
+
+    function updateStatus(endpoints) {
+      Object.keys(endpoints).forEach(function (section) {
+        endpoints[section].forEach(function (endpoint) {
+          $('#' + endpoint.name).text(endpoint.statusCode)
+        })
+      })
+    }
+  </script>
+</body>
+</html>

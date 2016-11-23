@@ -1,0 +1,27 @@
+
+{
+  "sites": [
+    {
+        "name": "ewfwerewr",
+        "url":  "http://www.sdfsefsdfsdfsdfsdf.de"
+    },
+    {
+        "name": "google",
+        "url":  "http://www.google.com"
+    },
+    {
+        "name": "heise",
+        "url":  "http://www.heise.de"
+    }
+  ],
+  "another_set_of_sites": [
+    {
+        "name": "yahoo",
+        "url":  "http://www.yahoo.de"
+    },
+    {
+        "name": "microsoft",
+        "url":  "http://www.microsoft.com"
+    }
+  ]
+}

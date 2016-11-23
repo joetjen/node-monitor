@@ -2,6 +2,7 @@ const http    = require('http')
 const express = require('express')
 const request = require('request')
 
+var pkg       = require('./package.json')
 var config    = require('./config.json')
 var endpoints = require('./endpoints.json')
 
@@ -16,7 +17,9 @@ app.get('/jquery/jquery.js', serve('/node_modules/jquery/dist/jquery.js'))
 
 io.sockets.on('connection', onSocketConnection)
 
-server.listen(config.port || 9000)
+server.listen(config.port || 9000, () => {
+  console.log(`Listening on port ${config.port || 9000}`)
+})
 
 setInterval(sendData, 3000)
 
@@ -34,7 +37,7 @@ function onSocketConnection(socket) {
   socket.emit('chat', {
     time:  new Date(),
     type:  'text',
-    value: 'Hello, you got connected'
+    value: 'Hello, you got connected to ' + pkg.version
   })
 }
 
